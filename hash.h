@@ -20,14 +20,50 @@ struct MyStringHash {
     HASH_INDEX_T operator()(const std::string& k) const
     {
         // Add your code here
+				unsigned long long w[5] = {0,0,0,0,0};
+			//	std::string comp = k;
 
+				for(int i = 0; i < k.size()/6 + 1; i++) //goes thru w reverse
+				{
+					unsigned long long int result = 0;
+					for(int j = 0; j < 6; j++)
+					{
+						if(k.size()-(i+1)*6+j < 0)
+							result += 0;
+						else 
+							result = result * 36 +letterDigitToNumber(k[(k.size())-(i+1)*6+j]);
+					}
 
+					w[5-i-1] = result;
+				}
+
+				size_t answer = ((rValues[0]*w[0])
+					 + (rValues[1]*w[1])
+					 + (rValues[2]*w[2])
+					 + (rValues[3]*w[3])
+					 + (rValues[4]*w[4]));
+
+				return answer;
     }
 
     // A likely helper function is to convert a-z,0-9 to an integral value 0-35
     HASH_INDEX_T letterDigitToNumber(char letter) const
     {
         // Add code here or delete this helper function if you do not want it
+				if(letter >= 'A' && letter <= 'Z')
+				{
+					return letter - 65;
+				}
+
+				if(letter >= '0' && letter <= '9')
+				{
+					return letter - 22;
+				}
+
+				if(letter >= 'a' && letter <= 'z')
+				{
+					return letter - 97;
+				}
 
     }
 
